@@ -8,13 +8,20 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
+using MetroFramework.Forms;
+
 namespace GUI
 {
-    public partial class Form1 : Form
+    public partial class Form1 : MetroFramework.Forms.MetroForm
     {
         public Form1()
         {
             InitializeComponent();
+        }
+
+        private void metroTile1_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }
