@@ -73,6 +73,26 @@ namespace GUI.Properties {
         /// <summary>
         ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap iconfinder_securityprotectlockshield04_4021479_113137 {
+            get {
+                object obj = ResourceManager.GetObject("iconfinder-securityprotectlockshield04-4021479_113137", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap iconfinder_securityprotectlockshield04_4021479_1131371 {
+            get {
+                object obj = ResourceManager.GetObject("iconfinder-securityprotectlockshield04-4021479_1131371", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap reload_96 {
             get {
                 object obj = ResourceManager.GetObject("reload 96", resourceCulture);

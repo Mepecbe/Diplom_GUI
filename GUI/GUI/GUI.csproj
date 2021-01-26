@@ -151,16 +151,16 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Form1.cs">
+    <Compile Include="MainForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Form1.Designer.cs">
-      <DependentUpon>Form1.cs</DependentUpon>
+    <Compile Include="MainForm.Designer.cs">
+      <DependentUpon>MainForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <EmbeddedResource Include="Form1.resx">
-      <DependentUpon>Form1.cs</DependentUpon>
+    <EmbeddedResource Include="MainForm.resx">
+      <DependentUpon>MainForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -188,12 +188,23 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="MetroFramework.txt" />
+    <None Include="Resources\iconfinder-securityprotectlockshield04-4021479_1131371.png" />
+    <None Include="Resources\iconfinder-securityprotectlockshield04-4021479_113137.png" />
     <None Include="Resources\close 96.png" />
     <None Include="Resources\reload 96.png" />
     <None Include="Resources\safe 96.png" />
     <None Include="Resources\settings 96.png" />
     <None Include="Resources\search 96.png" />
     <None Include="Resources\search.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Components\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\Antivirus_Core\API_Client_Library\API_Client_Library.csproj">
+      <Project>{0bab3d40-59eb-46f0-8a82-b90b1df1f593}</Project>
+      <Name>API_Client_Library</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
