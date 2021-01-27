@@ -13,6 +13,8 @@ using MetroFramework.Forms;
 using Tulpep.NotificationWindow;
 using API_Client_Library;
 
+using GUI.Components.ScanManager;
+
 namespace GUI
 {
     public partial class MainForm : MetroFramework.Forms.MetroForm
@@ -24,10 +26,13 @@ namespace GUI
         public static Queue<VirusFileInfo> viruses = new Queue<VirusFileInfo>();
 
         public static System.Windows.Forms.Timer Updater = new System.Windows.Forms.Timer();
+        public static bool ScanEnabled = false;
 
         public MainForm()
         {
             InitializeComponent();
+
+            ScanManager.Init(this);
 
             {
                 TabControl.Multiline = true;
@@ -51,8 +56,15 @@ namespace GUI
             }
         }
 
+
+
         private void MyTimer_Tick(object sender, EventArgs e)
         {
+            if (ScanManager.State == ScanState.Active)
+            {
+                return;
+            }
+
             if(files.Count > 0)
             {
                 files_sync.WaitOne();
@@ -132,19 +144,111 @@ namespace GUI
         {
             this.TabControl.SelectedIndex = 0;
         }
+        private void metroButton11_Click(object sender, EventArgs e)
+        {
+            this.TabControl.SelectedIndex = 0;
+        }
+        private void metroButton8_Click(object sender, EventArgs e)
+        {
+            this.TabControl.SelectedIndex = 0;
+        }
         #endregion
+
+        private void добавитьПапкуToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var result = folderBrowserDialog1.ShowDialog();
+
+            if(result == DialogResult.OK)
+            {
+                var newItem = this.ScanObjectsList.Items.Add((this.ScanObjectsList.Items.Count + 1).ToString());
+                newItem.SubItems.Add("       " + folderBrowserDialog1.SelectedPath);
+            }
+        }
+
+        private void добавитьФайлToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var result = openFileDialog1.ShowDialog();
+
+            if (result == DialogResult.OK)
+            {
+                var newItem = this.ScanObjectsList.Items.Add((this.ScanObjectsList.Items.Count + 1).ToString());
+                newItem.SubItems.Add("       " + openFileDialog1.FileName);
+            }
+        }
+
+        /// <summary>
+        /// Начать сканирование
+        /// </summary>
+        private void metroButton2_Click(object sender, EventArgs e)
+        {
+            if(ScanObjectsList.Items.Count == 0)
+            {
+                return;
+            }
+
+            this.TabControl.SelectedIndex = 6;
+
+            var files = new List<string>();
+            var dirs = new List<string>();
+
+            foreach (ListViewItem Item in ScanObjectsList.Items)
+            {
+                if (Item.SubItems[0].Text.LastIndexOf('.') > Item.SubItems[0].Text.LastIndexOf('\\'))
+                {
+                    files.Add(Item.SubItems[0].Text);
+                }
+                else
+                {
+                    dirs.Add(Item.SubItems[1].Text);
+                }
+            }
+
+            ScanManager.StartScan(dirs.ToArray());
+        }
+
+        /// <summary>
+        /// При открытии вкладки отображения процесса сканирования
+        /// </summary>
+        private void tabPage7_Enter(object sender, EventArgs e)
+        {
+            this.active_scan_updater.Start();
+        }
+
+        /// <summary>
+        /// Обновление данных на странице процесса сканирования
+        /// </summary>
+        private void active_scan_updater_Tick(object sender, EventArgs e)
+        {
+            this.page_active_scan_all_count.Text = ScanManager.CountAllFiles.ToString();
+            this.page_active_scan_in_queue.Text = ScanManager.FileQueue.Count.ToString();
+            this.page_active_scan_scanned.Text = ScanManager.CountAllScannedFiles.ToString();
+
+            this.progressBar.Maximum = ScanManager.CountAllFiles;
+            this.progressBar.Value = ScanManager.CountAllScannedFiles;
+        }
     }
 
     public static class APIHandlers
     {
         public static void OnScannedFile(ScannedFileInfo info)
         {
+            if (ScanManager.State == ScanState.Active)
+            {
+                return;
+            }
+
             MainForm.files.Enqueue(info);
         }
 
         public static void OnFoundVirus(VirusFileInfo info)
         {
+            if (ScanManager.State == ScanState.Active)
+            {
+                return;
+            }
+
             MainForm.viruses.Enqueue(info);
         }
     }
+
 }

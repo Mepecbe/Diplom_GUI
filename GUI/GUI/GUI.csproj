@@ -151,6 +151,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Components\ScanManager.cs" />
     <Compile Include="MainForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -197,9 +198,7 @@
     <None Include="Resources\search 96.png" />
     <None Include="Resources\search.png" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Components\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <ProjectReference Include="..\..\..\Antivirus_Core\API_Client_Library\API_Client_Library.csproj">
       <Project>{0bab3d40-59eb-46f0-8a82-b90b1df1f593}</Project>
