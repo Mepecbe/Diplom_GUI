@@ -219,12 +219,55 @@ namespace GUI
         /// </summary>
         private void active_scan_updater_Tick(object sender, EventArgs e)
         {
-            this.page_active_scan_all_count.Text = ScanManager.CountAllFiles.ToString();
-            this.page_active_scan_in_queue.Text = ScanManager.FileQueue.Count.ToString();
-            this.page_active_scan_scanned.Text = ScanManager.CountAllScannedFiles.ToString();
+            {
+                this.page_active_scan_all_count.Text = ScanManager.CountAllFiles.ToString();
+                this.page_active_scan_scanned.Text = ScanManager.CountAllScannedFiles.ToString();
+                this.foundVirusesCount.Text = ScanManager.foundViruses.Count.ToString();
+            }
 
-            this.progressBar.Maximum = ScanManager.CountAllFiles;
-            this.progressBar.Value = ScanManager.CountAllScannedFiles;
+            {
+                this.progressBar.Maximum = ScanManager.CountAllFiles;
+                this.progressBar.Value = ScanManager.CountAllScannedFiles;
+            }
+
+            {
+                this.scanProgressSpinner.Maximum = ScanManager.CountAllFiles;
+                this.scanProgressSpinner.Value = ScanManager.CountAllScannedFiles;
+            }
+
+            if (ScanManager.CountAllFiles == ScanManager.CountAllScannedFiles)
+            {
+                this.TabControl.SelectedIndex = 7;
+            }
+        }
+
+        private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            API.ApiStop();
+        }
+
+        /// <summary>
+        /// Отменить(завершить) сканирование
+        /// </summary>
+        private void metroButton3_Click(object sender, EventArgs e)
+        {
+            //pass
+        }
+
+        /// <summary>
+        /// Приостановить сканирование
+        /// </summary>
+        private void metroButton4_Click(object sender, EventArgs e)
+        {
+            //pass
+        }
+
+        /// <summary>
+        /// Нажатие кнопки "Выполнить действия" на вкладке результатов сканирования
+        /// </summary>
+        private void metroButton12_Click(object sender, EventArgs e)
+        {
+            this.TabControl.SelectedIndex = 0;
         }
     }
 

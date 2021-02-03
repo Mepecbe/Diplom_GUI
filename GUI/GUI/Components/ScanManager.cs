@@ -15,7 +15,6 @@ namespace GUI.Components.ScanManager
     {
         const int MAX_SCAN_TASKS = 10;
 
-
         private static MainForm MForm;
         private static Thread Thread1 = new Thread(Handler);
 
@@ -39,6 +38,8 @@ namespace GUI.Components.ScanManager
         /// Активно сканируются
         /// </summary>
         public static int InScanProcess = 0;
+
+        public static List<VirusFileInfo> foundViruses = new List<VirusFileInfo>();
 
         /// <summary>
         /// Текущее состояние сканирования
@@ -84,7 +85,10 @@ namespace GUI.Components.ScanManager
             {
                 for (int index = 0; index < dirs.Length; index++)
                 {
-                    AddAllFilesToScan(dirs[index]);
+                    if (dirs[index] != null)
+                    {
+                        AddAllFilesToScan(dirs[index]);
+                    }
                 }
             }
 
@@ -106,7 +110,16 @@ namespace GUI.Components.ScanManager
             {
                 if (FileQueue.Count > 0 && InScanProcess <= MAX_SCAN_TASKS)
                 {
-                    API.AddToScan(FileQueue.Dequeue());
+                    var file = FileQueue.Dequeue();
+
+                    if (file != null)
+                    {
+                        API.AddToScan(file);
+                    }
+                    else
+                    {
+                        CountAllScannedFiles++;
+                    }
                 }
             }
         }
@@ -147,7 +160,7 @@ namespace GUI.Components.ScanManager
         private static void API_onScanFound(VirusFileInfo File)
         {
             CountAllScannedFiles++;
-            throw new NotImplementedException();
+            foundViruses.Add(File);
         }
 
         private static void API_onScanCompleted(ScannedFileInfo File)

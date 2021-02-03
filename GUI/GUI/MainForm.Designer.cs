@@ -99,7 +99,6 @@ namespace GUI
             this.tabPage7 = new System.Windows.Forms.TabPage();
             this.metroButton4 = new MetroFramework.Controls.MetroButton();
             this.metroButton3 = new MetroFramework.Controls.MetroButton();
-            this.metroLabel12 = new MetroFramework.Controls.MetroLabel();
             this.metroLabel11 = new MetroFramework.Controls.MetroLabel();
             this.metroLabel10 = new MetroFramework.Controls.MetroLabel();
             this.progressBar = new MetroFramework.Controls.MetroProgressBar();
@@ -111,9 +110,21 @@ namespace GUI
             this.columnHeader11 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.active_scan_updater = new System.Windows.Forms.Timer(this.components);
             this.page_active_scan_scanned = new MetroFramework.Controls.MetroLabel();
-            this.page_active_scan_in_queue = new MetroFramework.Controls.MetroLabel();
             this.metroLabel16 = new MetroFramework.Controls.MetroLabel();
             this.page_active_scan_all_count = new MetroFramework.Controls.MetroLabel();
+            this.metroLabel17 = new MetroFramework.Controls.MetroLabel();
+            this.foundVirusesCount = new MetroFramework.Controls.MetroLabel();
+            this.tabPage8 = new System.Windows.Forms.TabPage();
+            this.metroLabel12 = new MetroFramework.Controls.MetroLabel();
+            this.metroLabel18 = new MetroFramework.Controls.MetroLabel();
+            this.page_scan_result_all_scanned = new MetroFramework.Controls.MetroLabel();
+            this.metroListView4 = new MetroFramework.Controls.MetroListView();
+            this.columnHeader12 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader13 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader14 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.metroLabel19 = new MetroFramework.Controls.MetroLabel();
+            this.scanProgressSpinner = new MetroFramework.Controls.MetroProgressSpinner();
+            this.metroButton12 = new MetroFramework.Controls.MetroButton();
             this.TabControl.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.tabPage2.SuspendLayout();
@@ -126,6 +137,7 @@ namespace GUI
             this.ExceptionsContextMenu.SuspendLayout();
             this.tabPage6.SuspendLayout();
             this.tabPage7.SuspendLayout();
+            this.tabPage8.SuspendLayout();
             this.SuspendLayout();
             // 
             // TabControl
@@ -138,6 +150,7 @@ namespace GUI
             this.TabControl.Controls.Add(this.tabPage5);
             this.TabControl.Controls.Add(this.tabPage6);
             this.TabControl.Controls.Add(this.tabPage7);
+            this.TabControl.Controls.Add(this.tabPage8);
             this.TabControl.ItemSize = new System.Drawing.Size(0, 10);
             this.TabControl.Location = new System.Drawing.Point(2, 27);
             this.TabControl.Name = "TabControl";
@@ -772,13 +785,14 @@ namespace GUI
             // tabPage7
             // 
             this.tabPage7.BackColor = System.Drawing.SystemColors.ControlLightLight;
+            this.tabPage7.Controls.Add(this.scanProgressSpinner);
+            this.tabPage7.Controls.Add(this.foundVirusesCount);
+            this.tabPage7.Controls.Add(this.metroLabel17);
             this.tabPage7.Controls.Add(this.page_active_scan_all_count);
             this.tabPage7.Controls.Add(this.metroLabel16);
-            this.tabPage7.Controls.Add(this.page_active_scan_in_queue);
             this.tabPage7.Controls.Add(this.page_active_scan_scanned);
             this.tabPage7.Controls.Add(this.metroButton4);
             this.tabPage7.Controls.Add(this.metroButton3);
-            this.tabPage7.Controls.Add(this.metroLabel12);
             this.tabPage7.Controls.Add(this.metroLabel11);
             this.tabPage7.Controls.Add(this.metroLabel10);
             this.tabPage7.Controls.Add(this.progressBar);
@@ -799,6 +813,7 @@ namespace GUI
             this.metroButton4.TabIndex = 8;
             this.metroButton4.Text = "Приостановить";
             this.metroButton4.UseSelectable = true;
+            this.metroButton4.Click += new System.EventHandler(this.metroButton4_Click);
             // 
             // metroButton3
             // 
@@ -808,15 +823,7 @@ namespace GUI
             this.metroButton3.TabIndex = 7;
             this.metroButton3.Text = "Завершить сканирование";
             this.metroButton3.UseSelectable = true;
-            // 
-            // metroLabel12
-            // 
-            this.metroLabel12.AutoSize = true;
-            this.metroLabel12.Location = new System.Drawing.Point(52, 221);
-            this.metroLabel12.Name = "metroLabel12";
-            this.metroLabel12.Size = new System.Drawing.Size(76, 19);
-            this.metroLabel12.TabIndex = 6;
-            this.metroLabel12.Text = "В очереди:";
+            this.metroButton3.Click += new System.EventHandler(this.metroButton3_Click);
             // 
             // metroLabel11
             // 
@@ -888,15 +895,6 @@ namespace GUI
             this.page_active_scan_scanned.TabIndex = 9;
             this.page_active_scan_scanned.Text = "0";
             // 
-            // page_active_scan_in_queue
-            // 
-            this.page_active_scan_in_queue.AutoSize = true;
-            this.page_active_scan_in_queue.Location = new System.Drawing.Point(134, 221);
-            this.page_active_scan_in_queue.Name = "page_active_scan_in_queue";
-            this.page_active_scan_in_queue.Size = new System.Drawing.Size(16, 19);
-            this.page_active_scan_in_queue.TabIndex = 10;
-            this.page_active_scan_in_queue.Text = "0";
-            // 
             // metroLabel16
             // 
             this.metroLabel16.AutoSize = true;
@@ -915,6 +913,128 @@ namespace GUI
             this.page_active_scan_all_count.TabIndex = 12;
             this.page_active_scan_all_count.Text = "0";
             // 
+            // metroLabel17
+            // 
+            this.metroLabel17.AutoSize = true;
+            this.metroLabel17.Location = new System.Drawing.Point(52, 219);
+            this.metroLabel17.Name = "metroLabel17";
+            this.metroLabel17.Size = new System.Drawing.Size(129, 19);
+            this.metroLabel17.TabIndex = 13;
+            this.metroLabel17.Text = "Обнаружено угроз:";
+            // 
+            // foundVirusesCount
+            // 
+            this.foundVirusesCount.AutoSize = true;
+            this.foundVirusesCount.Location = new System.Drawing.Point(178, 219);
+            this.foundVirusesCount.Name = "foundVirusesCount";
+            this.foundVirusesCount.Size = new System.Drawing.Size(16, 19);
+            this.foundVirusesCount.TabIndex = 14;
+            this.foundVirusesCount.Text = "0";
+            // 
+            // tabPage8
+            // 
+            this.tabPage8.BackColor = System.Drawing.SystemColors.ControlLightLight;
+            this.tabPage8.Controls.Add(this.metroButton12);
+            this.tabPage8.Controls.Add(this.metroLabel19);
+            this.tabPage8.Controls.Add(this.metroListView4);
+            this.tabPage8.Controls.Add(this.page_scan_result_all_scanned);
+            this.tabPage8.Controls.Add(this.metroLabel18);
+            this.tabPage8.Controls.Add(this.metroLabel12);
+            this.tabPage8.Location = new System.Drawing.Point(4, 14);
+            this.tabPage8.Name = "tabPage8";
+            this.tabPage8.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage8.Size = new System.Drawing.Size(896, 415);
+            this.tabPage8.TabIndex = 7;
+            this.tabPage8.Text = "page_scan_result";
+            // 
+            // metroLabel12
+            // 
+            this.metroLabel12.AutoSize = true;
+            this.metroLabel12.FontSize = MetroFramework.MetroLabelSize.Tall;
+            this.metroLabel12.Location = new System.Drawing.Point(17, 9);
+            this.metroLabel12.Name = "metroLabel12";
+            this.metroLabel12.Size = new System.Drawing.Size(214, 25);
+            this.metroLabel12.TabIndex = 3;
+            this.metroLabel12.Text = "Результаты сканирования";
+            // 
+            // metroLabel18
+            // 
+            this.metroLabel18.AutoSize = true;
+            this.metroLabel18.Location = new System.Drawing.Point(52, 44);
+            this.metroLabel18.Name = "metroLabel18";
+            this.metroLabel18.Size = new System.Drawing.Size(177, 19);
+            this.metroLabel18.TabIndex = 4;
+            this.metroLabel18.Text = "Всего проверенно файлов:";
+            // 
+            // page_scan_result_all_scanned
+            // 
+            this.page_scan_result_all_scanned.AutoSize = true;
+            this.page_scan_result_all_scanned.Location = new System.Drawing.Point(235, 44);
+            this.page_scan_result_all_scanned.Name = "page_scan_result_all_scanned";
+            this.page_scan_result_all_scanned.Size = new System.Drawing.Size(16, 19);
+            this.page_scan_result_all_scanned.TabIndex = 5;
+            this.page_scan_result_all_scanned.Text = "0";
+            // 
+            // metroListView4
+            // 
+            this.metroListView4.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.columnHeader12,
+            this.columnHeader13,
+            this.columnHeader14});
+            this.metroListView4.Font = new System.Drawing.Font("Segoe UI", 12F);
+            this.metroListView4.FullRowSelect = true;
+            this.metroListView4.Location = new System.Drawing.Point(17, 157);
+            this.metroListView4.Name = "metroListView4";
+            this.metroListView4.OwnerDraw = true;
+            this.metroListView4.Size = new System.Drawing.Size(873, 252);
+            this.metroListView4.TabIndex = 6;
+            this.metroListView4.UseCompatibleStateImageBehavior = false;
+            this.metroListView4.UseSelectable = true;
+            this.metroListView4.View = System.Windows.Forms.View.Details;
+            // 
+            // columnHeader12
+            // 
+            this.columnHeader12.Text = "№";
+            this.columnHeader12.Width = 40;
+            // 
+            // columnHeader13
+            // 
+            this.columnHeader13.Text = "Файл";
+            this.columnHeader13.Width = 580;
+            // 
+            // columnHeader14
+            // 
+            this.columnHeader14.Text = "Тип вируса";
+            this.columnHeader14.Width = 249;
+            // 
+            // metroLabel19
+            // 
+            this.metroLabel19.AutoSize = true;
+            this.metroLabel19.Location = new System.Drawing.Point(52, 132);
+            this.metroLabel19.Name = "metroLabel19";
+            this.metroLabel19.Size = new System.Drawing.Size(151, 19);
+            this.metroLabel19.TabIndex = 7;
+            this.metroLabel19.Text = "Обнаруженные угрозы";
+            // 
+            // scanProgressSpinner
+            // 
+            this.scanProgressSpinner.Location = new System.Drawing.Point(826, 68);
+            this.scanProgressSpinner.Maximum = 100;
+            this.scanProgressSpinner.Name = "scanProgressSpinner";
+            this.scanProgressSpinner.Size = new System.Drawing.Size(38, 38);
+            this.scanProgressSpinner.TabIndex = 15;
+            this.scanProgressSpinner.UseSelectable = true;
+            // 
+            // metroButton12
+            // 
+            this.metroButton12.Location = new System.Drawing.Point(741, 128);
+            this.metroButton12.Name = "metroButton12";
+            this.metroButton12.Size = new System.Drawing.Size(149, 23);
+            this.metroButton12.TabIndex = 8;
+            this.metroButton12.Text = "Выполнить действия";
+            this.metroButton12.UseSelectable = true;
+            this.metroButton12.Click += new System.EventHandler(this.metroButton12_Click);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -924,6 +1044,7 @@ namespace GUI
             this.MaximizeBox = false;
             this.Name = "MainForm";
             this.Resizable = false;
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MainForm_FormClosing);
             this.TabControl.ResumeLayout(false);
             this.tabPage1.ResumeLayout(false);
             this.tabPage2.ResumeLayout(false);
@@ -942,6 +1063,8 @@ namespace GUI
             this.tabPage6.PerformLayout();
             this.tabPage7.ResumeLayout(false);
             this.tabPage7.PerformLayout();
+            this.tabPage8.ResumeLayout(false);
+            this.tabPage8.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -995,7 +1118,6 @@ namespace GUI
         private MetroFramework.Controls.MetroLabel metroLabel9;
         private MetroFramework.Controls.MetroButton metroButton4;
         private MetroFramework.Controls.MetroButton metroButton3;
-        private MetroFramework.Controls.MetroLabel metroLabel12;
         private MetroFramework.Controls.MetroLabel metroLabel11;
         private MetroFramework.Controls.MetroLabel metroLabel10;
         private MetroFramework.Controls.MetroProgressBar progressBar;
@@ -1024,10 +1146,22 @@ namespace GUI
         private ColumnHeader columnHeader10;
         private ColumnHeader columnHeader11;
         private Timer active_scan_updater;
-        private MetroFramework.Controls.MetroLabel page_active_scan_in_queue;
         private MetroFramework.Controls.MetroLabel page_active_scan_scanned;
         private MetroFramework.Controls.MetroLabel page_active_scan_all_count;
         private MetroFramework.Controls.MetroLabel metroLabel16;
+        private MetroFramework.Controls.MetroLabel foundVirusesCount;
+        private MetroFramework.Controls.MetroLabel metroLabel17;
+        private TabPage tabPage8;
+        private MetroFramework.Controls.MetroLabel metroLabel12;
+        private MetroFramework.Controls.MetroLabel metroLabel19;
+        private MetroFramework.Controls.MetroListView metroListView4;
+        private ColumnHeader columnHeader12;
+        private ColumnHeader columnHeader13;
+        private ColumnHeader columnHeader14;
+        private MetroFramework.Controls.MetroLabel page_scan_result_all_scanned;
+        private MetroFramework.Controls.MetroLabel metroLabel18;
+        private MetroFramework.Controls.MetroProgressSpinner scanProgressSpinner;
+        private MetroFramework.Controls.MetroButton metroButton12;
     }
 
 
